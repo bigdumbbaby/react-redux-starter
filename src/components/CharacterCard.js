@@ -1,6 +1,14 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import types from '../Redux/types'
+
+const { REMOVE_CHARACTER } = types
 
 export default function CharacterCard(props) {
+  const dispatch = useDispatch()
+  const handleClick = (event) => {
+    dispatch({type: REMOVE_CHARACTER, id: props.id })
+  }
   return (
     <li className="character-card">
       <div className="character-card-image">
@@ -14,7 +22,7 @@ export default function CharacterCard(props) {
         </p>
         <p className="text-gray">Last known location:</p>
         <p className="character-card-location">{props.location.name}</p>
-        <button className="remove-button">Remove</button>
+        <button onClick={handleClick} className="remove-button">Remove</button>
       </div>
     </li>
   )

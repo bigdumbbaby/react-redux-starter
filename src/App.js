@@ -2,16 +2,24 @@ import './App.css';
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import CharacterContainer from './components/CharacterContainer';
+import { useSelector, useDispatch } from 'react-redux'
+import types from './Redux/types'
 
 const baseUrl = 'https://rickandmortyapi.com/api/character/?page=7'
+const { SET_CHARACTERS } = types
 
 function App() {
 
-  const [characters, setCharacters] = useState([])
+  // const [characters, setCharacters] = useState([])
+  const dispatch = useDispatch()
+  const characters = useSelector(state => state.characters)
 
   useEffect(() => {
     axios.get(baseUrl)
-      .then(({data}) => setCharacters(data.results))
+      .then(({data}) => dispatch({
+        type: SET_CHARACTERS,
+        characters: data.results
+      }))
   }, [])
 
   return (
